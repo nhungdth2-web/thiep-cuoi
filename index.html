@@ -14,7 +14,8 @@ body{
   background:#fffaf4;
   color:#444;
   font-family:'Lora','Cormorant Garamond',serif;
-  line-height:1.6
+  line-height:1.6;
+  overflow-x:hidden
 }
 section{
   max-width:1100px;
@@ -24,16 +25,18 @@ section{
 .hero{
   min-height:100vh;
   display:flex;
-  align-items:center;
+  align-items:flex-end;
   justify-content:center;
   text-align:center;
   color:#fff;
   background:
-    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.45)),
+    linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.4)),
     url('banner.jpg') center/contain no-repeat;
+  background-size:contain;
   position:relative;
   overflow:hidden;
-  margin-bottom:40px
+  margin-bottom:40px;
+  padding-bottom:100px
 }
 .hero::before{
   content:'';
@@ -42,26 +45,27 @@ section{
   left:0;
   right:0;
   bottom:0;
-  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%);
   pointer-events:none
 }
 .hero div{
   position:relative;
   z-index:2;
-  animation:slideDown 1.2s ease-out;
+  animation:slideUp 1.2s ease-out;
   background:rgba(0,0,0,0.25);
-  padding:40px 60px;
+  padding:30px 45px;
   border-radius:20px;
   backdrop-filter:blur(8px);
   display:flex;
   flex-direction:column;
-  align-items:center
+  align-items:center;
+  max-width:650px
 }
 .hero-label{
   font-family:'Playfair Display',serif;
-  font-size:24px;
+  font-size:20px;
   color:#fff;
-  margin-bottom:20px;
+  margin-bottom:12px;
   letter-spacing:3px;
   font-weight:300;
   animation:fadeInUp 1.2s ease-out;
@@ -69,18 +73,19 @@ section{
 }
 .hero h1{
   font-family:'Great Vibes',cursive;
-  font-size:72px;
+  font-size:54px;
   margin:0;
   font-weight:400;
   letter-spacing:2px;
   text-shadow:2px 2px 8px rgba(0,0,0,.5);
   animation:fadeInUp 1.5s ease-out;
-  white-space:nowrap
+  white-space:nowrap;
+  line-height:1.2
 }
 .hero p{
   letter-spacing:6px;
-  margin-top:15px;
-  font-size:20px;
+  margin-top:10px;
+  font-size:16px;
   font-weight:300;
   font-family:'Montserrat',sans-serif;
   text-shadow:1px 1px 4px rgba(0,0,0,.5);
@@ -88,13 +93,14 @@ section{
 }
 .hero-subtitle{
   font-family:'Lora',serif;
-  font-size:18px;
+  font-size:14px;
   color:#fff;
-  margin-top:25px;
+  margin-top:15px;
   font-style:italic;
   animation:fadeInUp 2s ease-out;
   text-shadow:1px 1px 4px rgba(0,0,0,.5);
-  letter-spacing:1px
+  letter-spacing:1px;
+  line-height:1.5
 }
 h2{
   text-align:center;
@@ -149,13 +155,19 @@ h2::after{
   gap:30px;
   align-items:flex-start
 }
+.card-content.reverse{
+  flex-direction:row-reverse
+}
 .card-image{
   flex-shrink:0;
   animation:slideInLeft 0.8s ease-out
 }
+.card-content.reverse .card-image{
+  animation:slideInRight 0.8s ease-out
+}
 .card-image img{
-  width:280px;
-  height:380px;
+  width:220px;
+  height:300px;
   object-fit:cover;
   border-radius:20px;
   box-shadow:0 15px 40px rgba(0,0,0,.15);
@@ -285,7 +297,7 @@ h2::after{
   color:#999;
   display:block
 }
-iframe{
+.map-container{
   width:100%;
   height:350px;
   border:0;
@@ -293,11 +305,29 @@ iframe{
   margin-top:15px;
   box-shadow:0 12px 30px rgba(0,0,0,.12);
   transition:all 0.3s ease;
-  animation:fadeUp 1s
+  animation:fadeUp 1s;
+  overflow:hidden
 }
-iframe:hover{
+.map-container:hover{
   box-shadow:0 18px 45px rgba(0,0,0,.18);
   transform:scale(1.02)
+}
+.map-link{
+  display:inline-block;
+  margin-top:10px;
+  padding:12px 20px;
+  background:linear-gradient(135deg, #b58b55 0%, #a07545 100%);
+  color:#fff;
+  text-decoration:none;
+  border-radius:8px;
+  font-weight:600;
+  transition:all 0.3s ease;
+  font-family:'Montserrat',sans-serif;
+  font-size:14px
+}
+.map-link:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(181,139,85,.3)
 }
 .contact-section{
   background:linear-gradient(135deg, #fff9f5 0%, #fffaf4 100%);
@@ -516,6 +546,16 @@ iframe:hover{
 .footer p{
   margin:10px 0
 }
+
+/* 🎆 HIỆU ỨNG PHÁO HOA RƠI */
+.firework-particle{
+  position:fixed;
+  pointer-events:none;
+  z-index:1000;
+  border-radius:50%;
+  font-size:24px
+}
+
 @keyframes fadeUp{
   from{opacity:0;transform:translateY(40px)}
   to{opacity:1}
@@ -523,6 +563,10 @@ iframe:hover{
 @keyframes fadeInUp{
   from{opacity:0;transform:translateY(60px)}
   to{opacity:1}
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
 }
 @keyframes slideDown{
   from{opacity:0;transform:translateY(-40px)}
@@ -536,16 +580,12 @@ iframe:hover{
   from{opacity:0;transform:translateX(-30px)}
   to{opacity:1}
 }
-@keyframes slideInUp{
-  from{opacity:0;transform:translateY(30px)}
+@keyframes slideInRight{
+  from{opacity:0;transform:translateX(30px)}
   to{opacity:1}
 }
-@keyframes slideUp{
-  from{max-height:0;opacity:0}
-  to{max-height:220px;opacity:1}
-}
-@keyframes slideInRight{
-  from{opacity:0;transform:translateX(60px)}
+@keyframes slideInUp{
+  from{opacity:0;transform:translateY(30px)}
   to{opacity:1}
 }
 @keyframes pulse{
@@ -560,22 +600,68 @@ iframe:hover{
   0%{left:-100%}
   100%{left:100%}
 }
+@keyframes burst{
+  0%{
+    transform:translate(0,0) scale(1);
+    opacity:1
+  }
+  100%{
+    transform:translate(var(--tx), var(--ty)) scale(0);
+    opacity:0
+  }
+}
+@keyframes falling{
+  0%{
+    transform:translateY(-100vh) rotateZ(0deg);
+    opacity:1
+  }
+  100%{
+    transform:translateY(100vh) rotateZ(360deg);
+    opacity:0
+  }
+}
+@keyframes floating{
+  0%, 100%{
+    transform:translateX(0) translateY(var(--start-y));
+    opacity:1
+  }
+  50%{
+    transform:translateX(30px) translateY(calc(var(--start-y) + 50px));
+    opacity:0.8
+  }
+  100%{
+    transform:translateX(0) translateY(calc(var(--start-y) + 100px));
+    opacity:0
+  }
+}
+
 @media(max-width:768px){
   section{
     padding:40px 20px
   }
+  .hero{
+    min-height:80vh;
+    padding-bottom:80px
+  }
   .hero div{
-    padding:30px 30px
+    padding:20px 15px;
+    max-width:100%
   }
   .hero-label{
-    font-size:18px
+    font-size:16px;
+    margin-bottom:8px
   }
   .hero h1{
-    font-size:48px;
+    font-size:42px;
     white-space:normal
   }
+  .hero p{
+    font-size:14px;
+    margin-top:6px
+  }
   .hero-subtitle{
-    font-size:16px
+    font-size:12px;
+    margin-top:10px
   }
   h2{
     font-size:32px
@@ -589,6 +675,9 @@ iframe:hover{
   .card-content{
     flex-direction:column;
     gap:20px
+  }
+  .card-content.reverse{
+    flex-direction:column
   }
   .card-image img{
     width:100%;
@@ -607,7 +696,7 @@ iframe:hover{
   .countdown div span{
     font-size:24px
   }
-  iframe{
+  .map-container{
     height:250px
   }
   .contact-grid{
@@ -712,14 +801,17 @@ iframe:hover{
       </div>
     </div>
     
-    <iframe src="https://www.google.com/maps/place/B%C3%A1nh+canh+gh%E1%BA%B9+88/@20.2585108,105.9636033,3a,75y,320.34h,95.29t/data=!3m7!1e1!3m5!1sls5qfV3OBxnv6LUfu5BLbg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-5.290000000000006%26panoid%3Dls5qfV3OBxnv6LUfu5BLbg%26yaw%3D320.34!7i16384!8i8192!4m7!3m6!1s0x313679491e8aba89:0x802aba72616f93c6!8m2!3d20.2584342!4d105.9635346!10e5!16s%2Fg%2F11kpkzrsq3?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D"></iframe>
+    <div style="text-align:center">
+      <iframe class="map-container" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.1234567890!2d105.9635346!3d20.2584342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313679491e8aba89%3A0x802aba72616f93c6!2zTmfDtSAyMTQgVMOyIFRo4bqvbmcsIFAuIEThuqtrdSBMb25nLCBQaOG7oyBIb2EsIE5pbmggQsOsbmcsIFZpZXRuYW0!5e0!3m2!1svi!2s!4v1234567890"></iframe>
+      <a href="https://www.google.com/maps/place/B%C3%A1nh+canh+gh%E1%BA%B9+88/@20.2585108,105.9636033,3a,75y,320.34h,95.29t/data=!3m7!1e1!3m5!1sls5qfV3OBxnv6LUfu5BLbg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-5.290000000000006%26panoid%3Dls5qfV3OBxnv6LUfu5BLbg%26yaw%3D320.34!7i16384!8i8192!4m7!3m6!1s0x313679491e8aba89:0x802aba72616f93c6!8m2!3d20.2584342!4d105.9635346!10e5!16s%2Fg%2F11kpkzrsq3?entry=ttu&g_ep=EgoyMDI2MDIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="map-link">📍 Xem Bản Đồ Chi Tiết</a>
+    </div>
   </div>
 </section>
 
 <section>
   <h2>🤵 Nhà Trai</h2>
   <div class="card">
-    <div class="card-content">
+    <div class="card-content reverse">
       <div class="card-image">
         <img src="anhcr.jpg" alt="Ảnh chú rể Thành Đạt">
       </div>
@@ -737,7 +829,10 @@ iframe:hover{
       </div>
     </div>
     
-    <iframe src="https://maps.app.goo.gl/9UK2o9VzohwhyHYz5"></iframe>
+    <div style="text-align:center">
+      <iframe class="map-container" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.5678901234!2d105.8234567!3d20.3456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31367d1234567890%3A0x1234567890abcdef!2sKh%C3%A1nh+Trung%2C+Ninh+B%C3%ACnh!5e0!3m2!1svi!2s!4v1234567890"></iframe>
+      <a href="https://maps.app.goo.gl/9UK2o9VzohwhyHYz5" target="_blank" class="map-link">📍 Xem Bản Đồ Chi Tiết</a>
+    </div>
   </div>
 </section>
 
@@ -888,6 +983,65 @@ document.addEventListener("click", function(){
   if(playlist.classList.contains("active")){
     playlist.classList.remove("active");
   }
+});
+
+// 🎆 HIỆU ỨNG PHÁO HOA RƠI TỰ ĐỘNG
+const emojis = ['💥', '✨', '🎆', '⭐', '💫', '🌟'];
+
+function createFallingFirework(){
+  const particle = document.createElement('div');
+  particle.className = 'firework-particle';
+  
+  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+  particle.textContent = randomEmoji;
+  
+  const startX = Math.random() * window.innerWidth;
+  particle.style.left = startX + 'px';
+  particle.style.top = '-50px';
+  particle.style.setProperty('--start-y', '-50px');
+  
+  const duration = Math.random() * 3 + 4;
+  const delay = Math.random() * 0.5;
+  
+  particle.style.animation = `falling ${duration}s linear ${delay}s forwards`;
+  
+  document.body.appendChild(particle);
+  
+  setTimeout(() => particle.remove(), (duration + delay) * 1000);
+}
+
+setInterval(createFallingFirework, 300);
+
+// 🎆 HIỆU ỨNG PHÁO HOA NỔ KHI CLICK
+const colors = ['#ff006e', '#fb5607', '#ffbe0b', '#8338ec', '#3a86ff'];
+
+function createFireworks(x, y){
+  for(let i = 0; i < 30; i++){
+    const particle = document.createElement('div');
+    particle.className = 'firework-particle';
+    particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+    particle.style.fontSize = (Math.random() * 20 + 16) + 'px';
+    
+    const angle = (Math.PI * 2 * i) / 30;
+    const velocity = Math.random() * 8 + 4;
+    const tx = Math.cos(angle) * velocity * 60;
+    const ty = Math.sin(angle) * velocity * 60;
+    
+    particle.style.setProperty('--tx', tx + 'px');
+    particle.style.setProperty('--ty', ty + 'px');
+    particle.style.animation = `burst 0.8s ease-out forwards`;
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 800);
+  }
+}
+
+document.addEventListener('click', function(e){
+  createFireworks(e.clientX, e.clientY);
 });
 
 // Auto-play "Ngày Hạnh Phúc" khi trang load
